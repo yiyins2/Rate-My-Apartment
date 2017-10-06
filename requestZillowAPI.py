@@ -4,31 +4,34 @@ import xml.dom.minidom
 from classApartment import Apartment
 from ZillowAPI import zwsid
 
+# The following lines request a property info by address and zipcode
+'''
+parameters = {'zws-id': zwsid, 'address': '1109 W Stoughton St', \
+  'citystatezip': '61801', 'rentzestimate': True}
+response = requests.get("http://www.zillow.com/webservice/GetSearchResults.htm", params=parameters)
+'''
 
-# parameters = {'zws-id': zwsid, 'address': '1109 W \
-#     Stoughton St', 'citystatezip': '61801', 'rentzestimate': True}
-# response = requests.get("http://www.zillow.com/webservice/GetSearchResults.htm", params=parameters)
-
+# The following lines request 10 more property info with one known zpid
 parameters = {'zws-id': zwsid, 'zpid': 89056297, 'count': 10, 'rentzestimate': True}
 response = requests.get("http://www.zillow.com/webservice/GetComps.htm", params=parameters)
 
 
-# This root contains only the request house info
-# Or the request house info and all 10 comparables around it
+# root of the entire document
 root = fromstring(response.content)
 
-# xmlOfRoot = xml.dom.minidom.parseString(response.content)
-# prettyXml = xmlOfRoot.toprettyxml()
+# create a pretty version of the response and print it
+'''
+xmlOfRoot = xml.dom.minidom.parseString(response.content)
+prettyXml = xmlOfRoot.toprettyxml()
+print(prettyXml)
+'''
 
-# Lists of elements of each info type
+# Create lists of each info type and retreive info from the root
 zpidList = root.findall('.//response//zpid')
 addressList = root.findall('.//response//address')
 rentList = root.findall('.//response//rentzestimate/amount')
 
-# Testing
-print('The length of zpidList is ', len(zpidList))
-
-# Create a list of apartments
+# Create a list of apartments and store info into it
 apartmentList = []
 for i in range(len(zpidList)):
     zpid = int(zpidList[i].text)
@@ -40,9 +43,10 @@ for i in range(len(zpidList)):
     apartmentList[i].set_address(address)
 
 
-# Testing
+# Testing: print the length of apartmentList
 print('The length of apartmentList is ',len(apartmentList))
+print(Apartment.apartCount)
 
-# print(apartmentList[0].zpid,apartmentList[0].rentPerMonth)
+# Print each apartment info
 for i in range(len(apartmentList)):
     apartmentList[i].display_info()
