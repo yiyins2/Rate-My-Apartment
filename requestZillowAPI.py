@@ -2,13 +2,14 @@ import requests
 from xml.etree.ElementTree import fromstring, ElementTree
 import xml.dom.minidom
 from classApartment import Apartment
-#zws-id: X1-ZWz1g0tbpxip6z_86zet
+from ZillowAPI import zwsid
 
-# parameters = {'zws-id': 'X1-ZWz1g0tbpxip6z_86zet', 'address': '1109 W \
+
+# parameters = {'zws-id': zwsid, 'address': '1109 W \
 #     Stoughton St', 'citystatezip': '61801', 'rentzestimate': True}
 # response = requests.get("http://www.zillow.com/webservice/GetSearchResults.htm", params=parameters)
 
-parameters = {'zws-id': 'X1-ZWz1g0tbpxip6z_86zet', 'zpid': 89056297, 'count': 10, 'rentzestimate': True}
+parameters = {'zws-id': zwsid, 'zpid': 89056297, 'count': 10, 'rentzestimate': True}
 response = requests.get("http://www.zillow.com/webservice/GetComps.htm", params=parameters)
 
 
