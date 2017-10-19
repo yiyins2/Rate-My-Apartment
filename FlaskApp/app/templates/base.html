@@ -12,9 +12,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
   </head>
   <body>
-    <div>Microblog: <a href="/index">Home</a> <a herf="/login"> Log In</a></div>
+    <div>Microblog: <a href="/index">Home</a> <a href="/login">Log In</a></div>
     <hr>
     <div class="container">
+      <!-- flash the flashed messages -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li>{{ message}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
     <!--block control statement to define the place where the derived templates can insert themselves-->
     {% block content %}
     {% endblock %}
