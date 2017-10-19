@@ -8,6 +8,24 @@ class User(db.Model):
     # The first argument to db.relationship indicates the "many" class of this relationship. The backref argument defines a field that will be added to the objects of the "many" class that points back at the "one" object.
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
+    # @property
+    # def is_authenticated(self):
+    #     return True
+    #
+    # @property
+    # def is_active(self):
+    #     return True
+    #
+    # @property
+    # def is_anonymous(self):
+    #     return False
+    #
+    # def get_id(self):
+    #     try:
+    #         return unicode(self.id)  # python 2
+    #     except NameError:
+    #         return str(self.id)  # python 3
+    #
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
