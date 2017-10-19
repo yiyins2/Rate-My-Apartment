@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<div lang="en">
+<head>
+    <script type = "text/javascript"></script>
+    <script src = "reviewpageJS.js"></script>
+    <link rel="stylesheet" type="text/css" href="reviewpagestyle.css">
+    <meta charset="UTF-8">
+    <title>Rate My Apartment - Review Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+    div.about {
+
+    }
+
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+
+
+<div class="header">
+
+    <div class = "social-icons">
+        <a href="#" class="fa fa-facebook"></a>
+        <a href="#" class="fa fa-twitter"></a>
+    </div>
+
+    <h1>RATE MY APARTMENT</h1>
+    <h3>JSM's 2DK Room near Green Street</h3>
+
+    <img src="the-kelvin-apartments-exterior.jpg" alt = "JSM's Apartment near Green St.";>
+    <h6><span>MORE PHOTOS</span></h6>
+
+</div>
+
+<div class = "body">
+    <div class = "body-list">
+        <div class = "ABOUT">
+            <h2>ABOUT</h2>
+            <p>a</p>
+            <p>b</p>
+            <p>c</p>
+            <p>d</p>
+        </div>
+        <div class = "REVIEW">
+            <h2>REVIEW</h2>
+            <p>a</p>
+            <p>b</p>
+            <p>c</p>
+            <p>d</p>
+        </div>
+        <div class = "OWNER">
+            <h2>ABOUT</h2>
+            <p>a</p>
+            <p>b</p>
+            <p>c</p>
+            <p>d</p>
+        </div>
+        <div class = "LOCATION">
+            <h2>LOCATION</h2>
+            <p>a</p>
+            <p>b</p>
+            <p>c</p>
+            <p>d</p>
+            <div id="map" style="width:400px;height:400px"></div>
+                <script>
+                    function myMap() {
+                        var mapOptions = {
+                            center: new google.maps.LatLng(40.116420, -88.243383),
+                            zoom: 15,
+                            mapTypeId: google.maps.MapTypeId.HYBRID
+                        }
+                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                }
+                </script>
+            <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+        </div>
+    </div>
+</div>
+
+<div class = "footer">
+
+</div>
+
+</div>
