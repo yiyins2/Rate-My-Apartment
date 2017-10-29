@@ -5,6 +5,7 @@ from ZillowAPI import zwsid
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database import Address, Base, Apartment
+from centerID import zpid
 
 # The following lines request a property info by address and zipcode
 '''
@@ -14,7 +15,7 @@ response = requests.get("http://www.zillow.com/webservice/GetSearchResults.htm",
 '''
 
 # The following lines request 10 more property info with one known zpid
-parameters = {'zws-id': zwsid, 'zpid': 89042500, 'count': 10, 'rentzestimate': True}
+parameters = {'zws-id': zwsid, 'zpid': zpid, 'count': 10, 'rentzestimate': True}
 response = requests.get("http://www.zillow.com/webservice/GetComps.htm", params=parameters)
 
 
@@ -53,21 +54,26 @@ session = DBSession()
 
 # Store the apartments info into database
 for i in range(len(zpidList)):
-    condition = session.query(Apartment.zpid == int(zpidList[i].text)).all()
-    if '(True,)' in str(condition):
-        continue
+    thisA = session.query(Apartment).filter(Apartment.zpid == int(zpidList[i].text)).all()
+    if len(thisA) == 0:
+        new_address = Address(street=addressList[i].find('street').text, \
+                              zipcode=int(addressList[i].find('zipcode').text), \
+                              city=addressList[i].find('city').text, \
+                              state=addressList[i].find('state').text)
 
-    new_address = Address(street=addressList[i].find('street').text, \
-                          zipcode=int(addressList[i].find('zipcode').text),\
-                          city=addressList[i].find('city').text, \
-                          state=addressList[i].find('state').text)
-    session.add(new_address)
-    session.commit()
-    new_apartment = Apartment(zpid=int(zpidList[i].text), \
-                              rentPerMonth=int(rentList[i].text), \
-                              address=new_address)
-    session.add(new_apartment)
-    session.commit()
+        new_apartment = Apartment(zpid=int(zpidList[i].text), \
+                                  rentPerMonth=float(rentList[i].text), \
+                                  address=[new_address])
+
+        session.add(new_address)
+        session.add(new_apartment)
+
+        session.commit()
+    else:
+        thisA[0].rentPerMonth = float(rentList[i].text)
+        session.commit()
+
+
 
 
 
