@@ -1,4 +1,4 @@
-# This is how to query the database 
+# This is how to query the database
 from database import Apartment, Base, Address
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///apartments.db')
@@ -8,6 +8,7 @@ DBSession = sessionmaker()
 DBSession.bind = engine
 session = DBSession()
 # To print zpid, address, rent per month
+# the linked tables can be accessed now
 for apartment in session.query(Apartment).all():
     print('zpid:', apartment.zpid, \
           '\nAddress:', apartment.address[0].street, \
